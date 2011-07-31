@@ -34,7 +34,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
         $event->data['script'][] = array(
 			'type'    => 'text/javascript',
 			'charset' => 'utf-8',
-			'src'     => $this->getConf('url')
+			'src'     => $this->getConf('url'),
 			'_data'   => '',
 		);
     }
