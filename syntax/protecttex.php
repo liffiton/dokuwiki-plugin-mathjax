@@ -50,8 +50,9 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
     public function render($mode, &$renderer, $data) {
         if($mode != 'xhtml') return false;
 
-        // Just pass it through...
-        $renderer->doc .= $data;
+        // Just pass it through, but escape xml entities...
+        $renderer->doc .= $renderer->_xmlEntities($data);
+
         return true;
     }
 }
