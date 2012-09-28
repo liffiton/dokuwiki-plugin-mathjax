@@ -16,6 +16,32 @@ if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once DOKU_PLUGIN.'syntax.php';
 
 class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
+    # We need to grab any math before dokuwiki tries to parse it.
+    # Once it's 'claimed' by this plugin (type: protected), it won't be altered.
+
+    # Set of environments that this plugin will protect from Dokuwiki parsing
+    # * is escaped to work in regexp below
+    # Note: "math", "displaymath", and "flalign" environments seem to not be 
+    #        recognized by Mathjax...  They will still be protected from Dokuwiki,
+    #        but they will not be rendered by MathJax.
+    private static $ENVIRONMENTS = array(
+        "math",
+        "displaymath",
+        "equation",
+        "equation\*",
+        "eqnarray",
+        "eqnarray\*",
+        "align",
+        "align\*",
+        "flalign",
+        "flalign\*",
+        "alignat",
+        "alignat\*",
+        "multline",
+        "multline\*",
+        "gather",
+        "gather\*",
+    );
 
     public function getType() {
         return 'protected';
@@ -25,21 +51,23 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         return 65;
     }
 
-    // We need to grab any math before dokuwiki tries to parse it.
-    // Once it's 'claimed' by this plugin (type: protected), it won't be altered.
-
     // regexp patterns adapted from jsMath plugin: http://www.dokuwiki.org/plugin:jsmath
-    // TODO: Read these from config, so it always matches what we give mathjax
     public function connectTo($mode) {
         $this->Lexer->addEntryPattern('\$(?=[^\$][^\r\n]*?\$)',$mode,'plugin_mathjax_protecttex');
         $this->Lexer->addEntryPattern('\$\$(?=.*?\$\$)',$mode,'plugin_mathjax_protecttex');
         $this->Lexer->addEntryPattern('\\\\\((?=.*?\\\\\))',$mode,'plugin_mathjax_protecttex');
-        $this->Lexer->addEntryPattern('\\\\\[(?=.*?\\])',$mode,'plugin_mathjax_protecttex');
+        $this->Lexer->addEntryPattern('\\\\\[(?=.*?\\\\])',$mode,'plugin_mathjax_protecttex');
+        foreach (self::$ENVIRONMENTS as $env) {
+            $this->Lexer->addEntryPattern('\\\\begin{' . $env . '}(?=.*?\\\\end{' . $env . '})',$mode,'plugin_mathjax_protecttex');
+        }
     }
     public function postConnect() {
         $this->Lexer->addExitPattern('\$(?=[^\$])','plugin_mathjax_protecttex');
-        $this->Lexer->addExitPattern('\\\)','plugin_mathjax_protecttex');
-        $this->Lexer->addExitPattern('\\\]','plugin_mathjax_protecttex');
+        $this->Lexer->addExitPattern('\\\\\)','plugin_mathjax_protecttex');
+        $this->Lexer->addExitPattern('\\\\\]','plugin_mathjax_protecttex');
+        foreach (self::$ENVIRONMENTS as $env) {
+            $this->Lexer->addExitPattern('\\\\end{' . $env . '}','plugin_mathjax_protecttex');
+        }
     }
 
     public function handle($match, $state, $pos, &$handler){
