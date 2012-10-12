@@ -8,8 +8,8 @@
 $conf['url'] = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML';
 $conf['config'] = 'MathJax.Hub.Config({
     tex2jax: {
-        inlineMath: [ ["$","$"], ["\\\\(","\\\\)"] ],
-        displayMath: [ ["$$","$$"], ["\\\\[","\\\\]"] ],
+        inlineMath: [ ["$","$"], ["\\\\(","\\\\)"],["<jsm>","</jsm>"] ],
+        displayMath: [ ["$$","$$"], ["\\\\[","\\\\]"],["<jsmath>","</jsmath>"] ],
         processEscapes: true
     }
 });';

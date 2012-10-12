@@ -60,6 +60,8 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         foreach (self::$ENVIRONMENTS as $env) {
             $this->Lexer->addEntryPattern('\\\\begin{' . $env . '}(?=.*?\\\\end{' . $env . '})',$mode,'plugin_mathjax_protecttex');
         }
+        $this->Lexer->addEntryPattern('<jsm>(?=.*?</jsm>)',$mode,'plugin_mathjax_protecttex');
+        $this->Lexer->addEntryPattern('<jsmath>(?=.*?</jsmath>)',$mode,'plugin_mathjax_protecttex');
     }
     public function postConnect() {
         $this->Lexer->addExitPattern('\$(?=[^\$])','plugin_mathjax_protecttex');
@@ -68,6 +70,8 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         foreach (self::$ENVIRONMENTS as $env) {
             $this->Lexer->addExitPattern('\\\\end{' . $env . '}','plugin_mathjax_protecttex');
         }
+        $this->Lexer->addExitPattern('</jsm>','plugin_mathjax_protecttex');
+        $this->Lexer->addExitPattern('</jsmath>','plugin_mathjax_protecttex');
     }
 
     public function handle($match, $state, $pos, &$handler){
