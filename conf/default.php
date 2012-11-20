@@ -13,4 +13,5 @@ $conf['config'] = 'MathJax.Hub.Config({
         processEscapes: true
     }
 });';
+$conf['configfile'] = '';
 

@@ -7,4 +7,5 @@
 
 $meta['url'] = array('string');
 $meta['config'] = array('');
+$meta['configfile'] = array('string');
 

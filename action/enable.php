@@ -24,7 +24,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
 
     // Add two <script> tags to the headers:
     //  One to load MathJax and one to configure it
-    //  See http://www.mathjax.org/docs/2.0/configuration.html#using-in-line-configuration-options
+    //  See http://docs.mathjax.org/en/latest/configuration.html#using-in-line-configuration-options
     public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
         $event->data['script'][] = array(
 			'type'    => 'text/x-mathjax-config',
