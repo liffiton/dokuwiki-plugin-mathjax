@@ -22,15 +22,34 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_tpl_metaheader_output');
     }
 
-    // Add two <script> tags to the headers:
+    // Add <script> blocks to the headers:
     //  One to load MathJax and one to configure it
+    //  Also add one block per configfile, if any are specified
     //  See http://docs.mathjax.org/en/latest/configuration.html#using-in-line-configuration-options
     public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
+        // Create main config block
         $event->data['script'][] = array(
 			'type'    => 'text/x-mathjax-config',
 			'charset' => 'utf-8',
 			'_data'   => $this->getConf('config'),
 		);
+
+        // Include config files, if any specified
+        $configfiles = $this->getConf('configfile');
+        $files = explode(';', $configfiles);
+        foreach ($files as $f) {
+            $f = trim($f);
+            $contents = file_get_contents(DOKU_INC . $f);
+            if ($contents) {
+                $event->data['script'][] = array(
+                    'type'    => 'text/x-mathjax-config',
+                    'charset' => 'utf-8',
+                    '_data'   => "\n// " . $f . "\n" . $contents,
+                );
+            }
+        }
+
+        // Load MathJax itself
         $event->data['script'][] = array(
 			'type'    => 'text/javascript',
 			'charset' => 'utf-8',
