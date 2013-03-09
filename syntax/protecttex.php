@@ -53,7 +53,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
 
     // regexp patterns adapted from jsMath plugin: http://www.dokuwiki.org/plugin:jsmath
     public function connectTo($mode) {
-        $this->Lexer->addEntryPattern('\$(?=[^\$][^\r\n]*?\$)',$mode,'plugin_mathjax_protecttex');
+        $this->Lexer->addEntryPattern('(?<!\\\\)\$(?=[^\$][^\r\n]*?\$)',$mode,'plugin_mathjax_protecttex');
         $this->Lexer->addEntryPattern('\$\$(?=.*?\$\$)',$mode,'plugin_mathjax_protecttex');
         $this->Lexer->addEntryPattern('\\\\\((?=.*?\\\\\))',$mode,'plugin_mathjax_protecttex');
         $this->Lexer->addEntryPattern('\\\\\[(?=.*?\\\\])',$mode,'plugin_mathjax_protecttex');
@@ -62,7 +62,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         }
     }
     public function postConnect() {
-        $this->Lexer->addExitPattern('\$(?=[^\$])','plugin_mathjax_protecttex');
+        $this->Lexer->addExitPattern('\$(?!\$)','plugin_mathjax_protecttex');
         $this->Lexer->addExitPattern('\\\\\)','plugin_mathjax_protecttex');
         $this->Lexer->addExitPattern('\\\\\]','plugin_mathjax_protecttex');
         foreach (self::$ENVIRONMENTS as $env) {
