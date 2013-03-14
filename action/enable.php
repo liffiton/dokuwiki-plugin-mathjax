@@ -30,7 +30,6 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
         // Create main config block
         $event->data['script'][] = array(
 			'type'    => 'text/x-mathjax-config',
-			'charset' => 'utf-8',
 			'_data'   => $this->getConf('config'),
 		);
 
@@ -43,7 +42,6 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
             if ($contents) {
                 $event->data['script'][] = array(
                     'type'    => 'text/x-mathjax-config',
-                    'charset' => 'utf-8',
                     '_data'   => "\n// " . $f . "\n" . $contents,
                 );
             }
