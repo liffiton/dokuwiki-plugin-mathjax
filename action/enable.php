@@ -38,6 +38,9 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
         $files = explode(';', $configfiles);
         foreach ($files as $f) {
             $f = trim($f);
+            if ($f == "" or !is_readable($f)) {
+                continue;
+            }
             $contents = file_get_contents(DOKU_INC . $f);
             if ($contents) {
                 $event->data['script'][] = array(
