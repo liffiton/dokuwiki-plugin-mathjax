@@ -17,7 +17,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
     /**
      * Registers our handler for the TPL_METAHEADER_OUTPUT event
      */
-    public function register(Doku_Event_Handler &$controller) {
+    public function register(Doku_Event_Handler $controller) {
        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_tpl_metaheader_output');
     }
 
