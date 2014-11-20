@@ -134,7 +134,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= $data;
             return true;
         }
-        return true;
+        return false;
     }
 }
 
