@@ -14,4 +14,5 @@ $conf['config'] = 'MathJax.Hub.Config({
     }
 });';
 $conf['configfile'] = '';
+$conf['mathtags'] = '';
 

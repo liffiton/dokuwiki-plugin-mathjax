@@ -73,6 +73,14 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         foreach (self::$ENVIRONMENTS as $env) {
             $this->Lexer->addEntryPattern('\\\\begin{' . $env . '}(?=.*?\\\\end{' . $env . '})',$mode,'plugin_mathjax_protecttex');
         }
+
+        // Protect specified tags, if any
+        $conf_mathtags = $this->getConf('mathtags');
+        $mathtags = explode(',', $conf_mathtags);
+        foreach ($mathtags as $tag) {
+            $tag = trim($tag);
+            $this->Lexer->addEntryPattern('<' . $tag . '.*?>(?=.*?</' . $tag . '>)',$mode,'plugin_mathjax_protecttex');
+        }
     }
     public function postConnect() {
         $this->Lexer->addExitPattern('\$(?!\$)','plugin_mathjax_protecttex');
@@ -80,6 +88,14 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addExitPattern('\\\\\]','plugin_mathjax_protecttex');
         foreach (self::$ENVIRONMENTS as $env) {
             $this->Lexer->addExitPattern('\\\\end{' . $env . '}','plugin_mathjax_protecttex');
+        }
+
+        // Protect specified tags, if any
+        $conf_mathtags = $this->getConf('mathtags');
+        $mathtags = explode(',', $conf_mathtags);
+        foreach ($mathtags as $tag) {
+            $tag = trim($tag);
+            $this->Lexer->addExitPattern('</' . $tag . '>','plugin_mathjax_protecttex');
         }
     }
 
