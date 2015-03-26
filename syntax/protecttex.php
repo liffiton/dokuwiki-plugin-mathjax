@@ -79,6 +79,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         $mathtags = explode(',', $conf_mathtags);
         foreach ($mathtags as $tag) {
             $tag = trim($tag);
+            if ($tag == "") { continue; }
             $this->Lexer->addEntryPattern('<' . $tag . '.*?>(?=.*?</' . $tag . '>)',$mode,'plugin_mathjax_protecttex');
         }
     }
@@ -95,6 +96,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
         $mathtags = explode(',', $conf_mathtags);
         foreach ($mathtags as $tag) {
             $tag = trim($tag);
+            if ($tag == "") { continue; }
             $this->Lexer->addExitPattern('</' . $tag . '>','plugin_mathjax_protecttex');
         }
     }
