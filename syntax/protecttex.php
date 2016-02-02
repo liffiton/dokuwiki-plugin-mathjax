@@ -138,7 +138,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
      * @param   $data     array         data created by handler()
      * @return  boolean                 rendered correctly?
      */
-    public function render($mode, &$renderer, $data) {
+    public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml' || $mode == 'odt') {
             /** @var Doku_Renderer_xhtml $renderer */
 
