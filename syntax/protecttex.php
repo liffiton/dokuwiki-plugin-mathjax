@@ -152,6 +152,11 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= $data;
             return true;
         }
+		
+		if ($mode == 'latexport') {
+		    $renderer->mathjax_content($data);
+		}
+		
         return false;
     }
 }
