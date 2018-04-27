@@ -139,27 +139,22 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
      * @return  boolean                 rendered correctly?
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
-        if($mode == 'xhtml' || $mode == 'odt') {
+        if ($mode == 'xhtml' || $mode == 'odt') {
             /** @var Doku_Renderer_xhtml $renderer */
 
             // Just pass it through, but escape xml entities...
             $renderer->doc .= $renderer->_xmlEntities($data);
             return true;
         }
-
-        if ($mode == 'latex') {
-
-            $renderer->doc .= $data;
-            return true;
-        }
-
-        if ($mode == 'latexport') {
-
+        if ($mode == 'latexport') {
+            // Pass math expressions to latexport renderer
             $renderer->mathjax_content($data);	
             return true;
         }
 
-        return false;
+        // For all other modes, pass through unchanged.
+        $renderer->doc .= $data;
+        return true;
     }
 }
 
