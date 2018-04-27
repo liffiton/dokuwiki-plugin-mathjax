@@ -1,7 +1,7 @@
 base   mathjax
 author Mark Liffiton
 email  liffiton@gmail.com
-date   2017-05-28
+date   2018-04-27
 name   MathJax plugin
 desc   Enables MathJax (http://mathjax.org/) parsing of TeX math expressions in wiki pages
 url    https://www.dokuwiki.org/plugin:mathjax
