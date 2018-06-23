@@ -61,7 +61,7 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * regexp patterns adapted from jsMath plugin: http://www.dokuwiki.org/plugin:jsmath
+     * regexp patterns adapted from jsMath plugin: https://www.dokuwiki.org/plugin:jsmath
      *
      * @param string $mode
      */

@@ -25,7 +25,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
      * Add <script> blocks to the headers:
      *   - One to load MathJax and one to configure it
      *   - Also add one block per configfile, if any are specified
-     * See http://docs.mathjax.org/en/latest/configuration.html#using-in-line-configuration-options
+     * See https://docs.mathjax.org/en/latest/configuration.html#using-in-line-configuration-options
      *
      * @param Doku_Event $event
      * @param            $param
