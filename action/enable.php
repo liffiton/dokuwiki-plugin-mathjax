@@ -25,7 +25,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
      * Add <script> blocks to the headers:
      *   - One to load MathJax and one to configure it
      *   - Also add one block per configfile, if any are specified
-     * See https://docs.mathjax.org/en/latest/configuration.html#using-in-line-configuration-options
+     * See https://docs.mathjax.org/en/latest/web/configuration.html#configuration-using-an-in-line-script
      *
      * @param Doku_Event $event
      * @param            $param
@@ -33,9 +33,9 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
     public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
         // Create main config block
         $event->data['script'][] = array(
-			'type'    => 'text/x-mathjax-config',
-			'_data'   => $this->getConf('config'),
-		);
+            'type'    => 'text/javascript',
+            '_data'   => $this->getConf('config'),
+        );
 
         // Include config files, if any specified
         $configfiles = $this->getConf('configfile');
@@ -48,7 +48,7 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
             $contents = file_get_contents(DOKU_INC . $f);
             if ($contents) {
                 $event->data['script'][] = array(
-                    'type'    => 'text/x-mathjax-config',
+                    'type'    => 'text/javascript',
                     '_data'   => "\n// " . $f . "\n" . $contents,
                 );
             }
@@ -56,11 +56,12 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
 
         // Load MathJax itself
         $event->data['script'][] = array(
-			'type'    => 'text/javascript',
-			'charset' => 'utf-8',
-			'src'     => $this->getConf('url'),
-			'_data'   => '',
-		);
+            'type'    => 'text/javascript',
+            'charset' => 'utf-8',
+            'src'     => $this->getConf('url'),
+            'async'   => 'async',
+            '_data'   => '',
+        );
     }
 
 }
