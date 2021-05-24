@@ -122,16 +122,6 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
      * @return  array Return an array with all data you want to use in render
      */
     public function handle($match, $state, $pos, Doku_Handler $handler){
-
-        $match = str_replace('<=>', '\Leftrightarrow', $match);
-        $match = str_replace('<->', '\leftrightarrow', $match);
-        $match = str_replace('->', '\rightarrow', $match);
-        $match = str_replace('<-', '\leftarrow', $match);
-        $match = str_replace('=>', '\Rightarrow', $match);
-        $match = str_replace('<=', '\Leftarrow', $match);
-        $match = str_replace('...', '\ldots', $match);
-        $match = str_replace('−', '-', $match);
-
         // Just pass it through...
         return $match;
     }
