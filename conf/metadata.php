@@ -8,5 +8,6 @@
 $meta['url'] = array('string');
 $meta['config'] = array('');
 $meta['configfile'] = array('string');
+$meta['asciimath'] = array('onoff');
 $meta['mathtags'] = array('string');
 

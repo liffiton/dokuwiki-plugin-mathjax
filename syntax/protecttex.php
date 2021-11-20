@@ -74,8 +74,10 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
             $this->Lexer->addEntryPattern('\\\\begin{' . $env . '}(?=.*?\\\\end{' . $env . '})',$mode,'plugin_mathjax_protecttex');
         }
 
-        // Protect the default AsciiMath delimiter
-        $this->Lexer->addEntryPattern('`(?=.*?`)',$mode,'plugin_mathjax_protecttex');
+        if ($this->getConf('asciimath')) {
+            // Protect the default AsciiMath delimiter
+            $this->Lexer->addEntryPattern('`(?=.*?`)',$mode,'plugin_mathjax_protecttex');
+        }
 
         // Protect specified tags, if any
         $conf_mathtags = $this->getConf('mathtags');
@@ -94,8 +96,10 @@ class syntax_plugin_mathjax_protecttex extends DokuWiki_Syntax_Plugin {
             $this->Lexer->addExitPattern('\\\\end{' . $env . '}','plugin_mathjax_protecttex');
         }
 
-        // Protect the default AsciiMath delimiter
-        $this->Lexer->addExitPattern('`','plugin_mathjax_protecttex');
+        if ($this->getConf('asciimath')) {
+            // Protect the default AsciiMath delimiter
+            $this->Lexer->addExitPattern('`','plugin_mathjax_protecttex');
+        }
 
         // Protect specified tags, if any
         $conf_mathtags = $this->getConf('mathtags');
