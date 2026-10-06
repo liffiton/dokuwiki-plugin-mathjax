@@ -61,6 +61,24 @@ class action_plugin_mathjax_enable extends DokuWiki_Action_Plugin {
 			'src'     => $this->getConf('url'),
 			'_data'   => '',
 		);
+
+        // Allow live-previews (https://www.dokuwiki.org/devel:js_live_syntax_rendering)
+        $event->data['script'][] = [
+            'type'    => 'text/javascript',
+            'charset' => 'utf-8',
+            '_data'   => "
+                if (!window.dw_livepreview_callbacks) {
+                    window.dw_livepreview_callbacks = {};
+                }
+                window.dw_livepreview_callbacks['mathjax'] = function() {
+                    // Put the rendering call in queue
+                    MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'dw_livepreview_buffer']);
+                    // Return a promise after the rendering has finished
+                    return new Promise((resolve, reject) => {
+                        MathJax.Hub.Queue(resolve);
+                    });
+                };"
+        ];
     }
 
 }
